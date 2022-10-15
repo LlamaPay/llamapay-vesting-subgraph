@@ -1,53 +1,42 @@
-import { BigInt } from "@graphprotocol/graph-ts"
-import {
-  Vyper_contract,
-  VestingEscrowCreated
-} from "../generated/Vyper_contract/Vyper_contract"
-import { ExampleEntity } from "../generated/schema"
+import { VestingFactory, VestingEscrow, Token } from "../generated/schema";
+import { VestingEscrowCreated } from "../generated/templates/Vyper_contract/VestingFactory";
+import { ERC20 } from "../generated/Vyper_contract/ERC20";
 
-export function handleVestingEscrowCreated(event: VestingEscrowCreated): void {
-  // Entities can be loaded from the store using a string ID; this ID
-  // needs to be unique across all entities of the same type
-  let entity = ExampleEntity.load(event.transaction.from.toHex())
+export function onVestingEscrowCreated(event: VestingEscrowCreated): void {
+  const factoryAddress = event.address;
+  const tokenAddress = event.params.token;
+  const escrowAddress = event.params.escrow;
 
-  // Entities only exist after they have been saved to the store;
-  // `null` checks allow to create entities on demand
-  if (!entity) {
-    entity = new ExampleEntity(event.transaction.from.toHex())
-
-    // Entity fields can be set using simple assignments
-    entity.count = BigInt.fromI32(0)
+  let factory = VestingFactory.load(factoryAddress.toHexString());
+  if (factory === null) {
+    factory = new VestingFactory(factoryAddress.toHexString());
+    factory.factory = factoryAddress;
   }
 
-  // BigInt and BigDecimal math are supported
-  entity.count = entity.count + BigInt.fromI32(1)
+  let token = Token.load(tokenAddress.toHexString());
+  if (token === null) {
+    token = new Token(tokenAddress.toHexString());
+    const erc20 = ERC20.bind(tokenAddress);
+    token.address = tokenAddress;
+    token.symbol = erc20.try_symbol().value;
+    token.name = erc20.try_name().value;
+    token.decimals = erc20.try_decimals().value;
+  }
 
-  // Entity fields can be set based on event parameters
-  entity.funder = event.params.funder
-  entity.token = event.params.token
+  let escrow = new VestingEscrow(escrowAddress.toHexString());
+  escrow.factory = factory.id;
+  escrow.admin = event.params.funder;
+  escrow.token = token.id;
+  escrow.recipient = event.params.recipient;
+  escrow.escrow = event.params.escrow;
+  escrow.amount = event.params.amount;
+  escrow.start = event.params.vesting_start;
+  escrow.duration = event.params.vesting_duration;
+  escrow.cliff = event.params.cliff_length;
 
-  // Entities can be written to the store with `.save()`
-  entity.save()
+  factory.count += 1;
 
-  // Note: If a handler doesn't require existing field values, it is faster
-  // _not_ to load the entity from the store. Instead, create it fresh with
-  // `new Entity(...)`, set the fields that should be updated and save the
-  // entity back to the store. Fields that were not set or unset remain
-  // unchanged, allowing for partial updates to be applied.
-
-  // It is also possible to access smart contracts from mappings. For
-  // example, the contract that has emitted the event can be connected to
-  // with:
-  //
-  // let contract = Contract.bind(event.address)
-  //
-  // The following functions can then be called on this contract to access
-  // state variables and other data:
-  //
-  // - contract.deploy_vesting_contract(...)
-  // - contract.deploy_vesting_contract(...)
-  // - contract.deploy_vesting_contract(...)
-  // - contract.target(...)
-  // - contract.escrows_length(...)
-  // - contract.escrows(...)
+  factory.save();
+  token.save();
+  escrow.save();
 }

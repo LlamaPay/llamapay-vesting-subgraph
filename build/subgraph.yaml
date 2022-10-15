@@ -1,6 +1,6 @@
 specVersion: 0.0.4
 schema:
-  file: ./schema.graphql
+  file: schema.graphql
 dataSources:
   - kind: ethereum
     name: Vyper_contract
@@ -18,14 +18,14 @@ dataSources:
         - VestingEscrow
       abis:
         - name: Vyper_contract
-          file: ./abis/Vyper_contract.json
+          file: Vyper_contract/abis/Vyper_contract.json
         - name: ERC20
-          file: ./abis/ERC20.json
+          file: Vyper_contract/abis/ERC20.json
       eventHandlers:
-        - event: VestingEscrowCreated(indexed address,indexed address,indexed address,address,uint256,uint256,uint256,uint256)
+        - event: VestingEscrowCreated(indexed address,indexed address,indexed
+            address,address,uint256,uint256,uint256,uint256)
           handler: onVestingEscrowCreated
-      file: ./src/vyper-contract.ts
-
+      file: Vyper_contract/Vyper_contract.wasm
 templates:
   - kind: ethereum/contract
     name: Vyper_contract
@@ -41,10 +41,10 @@ templates:
         - VestingFactory
       abis:
         - name: VestingFactory
-          file: ./abis/Vyper_contract.json
+          file: Vyper_contract/abis/Vyper_contract.json
         - name: VestingEscrow
-          file: ./abis/Vyper_contract_escrow.json
+          file: Vyper_contract/abis/Vyper_contract_escrow.json
       eventHandlers:
         - event: ApplyOwnership(address)
           handler: onApplyOwnership
-      file: ./src/vyper-contract-escrow.ts
+      file: templates/Vyper_contract/Vyper_contract.wasm
