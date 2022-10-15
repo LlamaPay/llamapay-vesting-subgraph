@@ -1,0 +1,23 @@
+specVersion: 0.0.1
+schema:
+  file: ./schema.graphql
+dataSources:
+  - kind: ethereum
+    name: Vyper_contract
+    network: mainnet
+    source:
+      address: "0xB93427b83573C8F27a08A909045c3e809610411a"
+      abi: Vyper_contract
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.5
+      language: wasm/assemblyscript
+      entities:
+        - VestingEscrowCreated
+      abis:
+        - name: Vyper_contract
+          file: ./abis/Vyper_contract.json
+      eventHandlers:
+        - event: VestingEscrowCreated(indexed address,indexed address,indexed address,address,uint256,uint256,uint256,uint256)
+          handler: handleVestingEscrowCreated
+      file: ./src/vyper-contract.ts
