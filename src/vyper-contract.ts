@@ -11,6 +11,7 @@ export function onVestingEscrowCreated(event: VestingEscrowCreated): void {
   if (factory === null) {
     factory = new VestingFactory(factoryAddress.toHexString());
     factory.factory = factoryAddress;
+    factory.count = 0;
   }
 
   let token = Token.load(tokenAddress.toHexString());
