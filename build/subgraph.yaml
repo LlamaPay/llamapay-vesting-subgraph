@@ -8,7 +8,7 @@ dataSources:
     source:
       address: "0xB93427b83573C8F27a08A909045c3e809610411a"
       abi: Vyper_contract
-      startBlock: 14932730
+      startBlock: 13373452
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.6
@@ -21,6 +21,30 @@ dataSources:
           file: Vyper_contract/abis/Vyper_contract.json
         - name: ERC20
           file: Vyper_contract/abis/ERC20.json
+      eventHandlers:
+        - event: VestingEscrowCreated(indexed address,indexed address,indexed
+            address,address,uint256,uint256,uint256,uint256)
+          handler: onVestingEscrowCreated
+      file: Vyper_contract/Vyper_contract.wasm
+  - kind: ethereum
+    name: Vyper_contract_yearn
+    network: mainnet
+    source:
+      address: "0x98d3872b4025ABE58C4667216047Fe549378d90f"
+      abi: Vyper_contract_yearn
+      startBlock: 13373452
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.6
+      language: wasm/assemblyscript
+      entities:
+        - VestingFactory
+        - VestingEscrow
+      abis:
+        - name: Vyper_contract_yearn
+          file: Vyper_contract_yearn/abis/Vyper_contract_yearn.json
+        - name: ERC20
+          file: Vyper_contract_yearn/abis/ERC20.json
       eventHandlers:
         - event: VestingEscrowCreated(indexed address,indexed address,indexed
             address,address,uint256,uint256,uint256,uint256)
