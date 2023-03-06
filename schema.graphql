@@ -14,6 +14,10 @@ type VestingEscrow @entity {
   escrow: Bytes!
   amount: BigInt!
   start: BigInt!
+  end: BigInt!
+  totalLocked: BigInt!
+  totalClaimed: BigInt!
+  disabledAt: BigInt!
   duration: BigInt!
   cliff: BigInt!
 }

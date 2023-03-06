@@ -164,6 +164,42 @@ export class VestingEscrow extends Entity {
     this.set("start", Value.fromBigInt(value));
   }
 
+  get end(): BigInt {
+    let value = this.get("end");
+    return value!.toBigInt();
+  }
+
+  set end(value: BigInt) {
+    this.set("end", Value.fromBigInt(value));
+  }
+
+  get totalLocked(): BigInt {
+    let value = this.get("totalLocked");
+    return value!.toBigInt();
+  }
+
+  set totalLocked(value: BigInt) {
+    this.set("totalLocked", Value.fromBigInt(value));
+  }
+
+  get totalClaimed(): BigInt {
+    let value = this.get("totalClaimed");
+    return value!.toBigInt();
+  }
+
+  set totalClaimed(value: BigInt) {
+    this.set("totalClaimed", Value.fromBigInt(value));
+  }
+
+  get disabledAt(): BigInt {
+    let value = this.get("disabledAt");
+    return value!.toBigInt();
+  }
+
+  set disabledAt(value: BigInt) {
+    this.set("disabledAt", Value.fromBigInt(value));
+  }
+
   get duration(): BigInt {
     let value = this.get("duration");
     return value!.toBigInt();

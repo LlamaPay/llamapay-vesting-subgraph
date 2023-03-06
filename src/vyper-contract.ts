@@ -1,3 +1,4 @@
+import { BigInt } from "@graphprotocol/graph-ts";
 import { VestingFactory, VestingEscrow, Token } from "../generated/schema";
 import { VestingEscrowCreated } from "../generated/templates/Vyper_contract/VestingFactory";
 import { ERC20 } from "../generated/Vyper_contract/ERC20";
@@ -32,6 +33,9 @@ export function onVestingEscrowCreated(event: VestingEscrowCreated): void {
   escrow.escrow = event.params.escrow;
   escrow.amount = event.params.amount;
   escrow.start = event.params.vesting_start;
+  escrow.end = event.params.vesting_start.plus(event.params.vesting_duration);
+  escrow.totalLocked = event.params.amount;
+  escrow.totalClaimed = new BigInt(0);
   escrow.duration = event.params.vesting_duration;
   escrow.cliff = event.params.cliff_length;
 
@@ -41,3 +45,4 @@ export function onVestingEscrowCreated(event: VestingEscrowCreated): void {
   token.save();
   escrow.save();
 }
+
