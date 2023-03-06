@@ -15,7 +15,6 @@ dataSources:
       language: wasm/assemblyscript
       entities:
         - VestingFactory
-        - VestingEscrow
       abis:
         - name: Vyper_contract
           file: ./abis/Vyper_contract.json
@@ -38,7 +37,6 @@ dataSources:
       language: wasm/assemblyscript
       entities:
         - VestingFactory
-        - VestingEscrow
       abis:
         - name: Vyper_contract_yearn
           file: ./abis/Vyper_contract_yearn.json
@@ -51,7 +49,7 @@ dataSources:
 
 templates:
   - kind: ethereum/contract
-    name: Vyper_contract
+    name: VestingEscrow
     network: mainnet
     source:
       abi: VestingEscrow
@@ -61,10 +59,7 @@ templates:
       language: wasm/assemblyscript
       entities:
         - VestingEscrow
-        - VestingFactory
       abis:
-        - name: VestingFactory
-          file: ./abis/Vyper_contract.json
         - name: VestingEscrow
           file: ./abis/Vyper_contract_escrow.json
       eventHandlers:
