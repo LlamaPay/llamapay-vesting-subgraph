@@ -4,6 +4,7 @@ import {
   RugPull,
 } from "../generated/templates/Vyper_contract/VestingEscrow";
 import { VestingEscrow } from "../generated/schema";
+import { BigInt } from "@graphprotocol/graph-ts";
 
 export function onApplyOwnership(event: ApplyOwnership): void {
   const escrowAddress = event.address;
@@ -17,14 +18,14 @@ export function onApplyOwnership(event: ApplyOwnership): void {
 
 export function onClaim(event: Claim): void {
   const escrowAddress = event.address;
-  const claimed = event.params.claimed;
 
   let escrow = VestingEscrow.load(escrowAddress.toHexString())!;
-  escrow.totalClaimed = escrow.totalClaimed.plus(claimed);
+  const oldclaimed = escrow.totalClaimed;
+  escrow.totalClaimed = event.params.claimed.plus(oldclaimed);
   escrow.save();
 }
 
-export function onRugPull (event: RugPull):void {
+export function onRugPull(event: RugPull): void {
   const escrowAddress = event.address;
   let escrow = VestingEscrow.load(escrowAddress.toHexString())!;
   escrow.disabledAt = event.block.timestamp;

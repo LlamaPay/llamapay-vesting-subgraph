@@ -35,15 +35,13 @@ export function onVestingEscrowCreated(event: VestingEscrowCreated): void {
   escrow.start = event.params.vesting_start;
   escrow.end = event.params.vesting_start.plus(event.params.vesting_duration);
   escrow.totalLocked = event.params.amount;
-  escrow.totalClaimed = new BigInt(0);
+  escrow.totalClaimed = BigInt.fromI32(0);
   escrow.duration = event.params.vesting_duration;
   escrow.cliff = event.params.cliff_length;
   escrow.disabledAt = event.params.vesting_start.plus(
     event.params.vesting_duration
   );
-
   factory.count += 1;
-
   factory.save();
   token.save();
   escrow.save();

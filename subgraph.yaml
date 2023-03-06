@@ -70,4 +70,8 @@ templates:
       eventHandlers:
         - event: ApplyOwnership(address)
           handler: onApplyOwnership
+        - event: Claim(indexed address,uint256)
+          handler: onClaim
+        - event: RugPull(address,uint256)
+          handler: onRugPull
       file: ./src/vyper-contract-escrow.ts
