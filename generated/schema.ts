@@ -217,6 +217,24 @@ export class VestingEscrow extends Entity {
   set cliff(value: BigInt) {
     this.set("cliff", Value.fromBigInt(value));
   }
+
+  get createdBlock(): BigInt {
+    let value = this.get("createdBlock");
+    return value!.toBigInt();
+  }
+
+  set createdBlock(value: BigInt) {
+    this.set("createdBlock", Value.fromBigInt(value));
+  }
+
+  get createdTimestamp(): BigInt {
+    let value = this.get("createdTimestamp");
+    return value!.toBigInt();
+  }
+
+  set createdTimestamp(value: BigInt) {
+    this.set("createdTimestamp", Value.fromBigInt(value));
+  }
 }
 
 export class Token extends Entity {

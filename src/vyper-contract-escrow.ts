@@ -4,7 +4,6 @@ import {
   RugPull,
 } from "../generated/templates/Vyper_contract/VestingEscrow";
 import { VestingEscrow } from "../generated/schema";
-import { BigInt } from "@graphprotocol/graph-ts";
 
 export function onApplyOwnership(event: ApplyOwnership): void {
   const escrowAddress = event.address;

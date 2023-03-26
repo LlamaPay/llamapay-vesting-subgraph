@@ -15,7 +15,6 @@ dataSources:
       language: wasm/assemblyscript
       entities:
         - VestingFactory
-        - VestingEscrow
       abis:
         - name: Vyper_contract
           file: Vyper_contract/abis/Vyper_contract.json
@@ -39,7 +38,6 @@ dataSources:
       language: wasm/assemblyscript
       entities:
         - VestingFactory
-        - VestingEscrow
       abis:
         - name: Vyper_contract_yearn
           file: Vyper_contract_yearn/abis/Vyper_contract_yearn.json
@@ -52,7 +50,7 @@ dataSources:
       file: Vyper_contract/Vyper_contract.wasm
 templates:
   - kind: ethereum/contract
-    name: Vyper_contract
+    name: VestingEscrow
     network: mainnet
     source:
       abi: VestingEscrow
@@ -62,12 +60,9 @@ templates:
       language: wasm/assemblyscript
       entities:
         - VestingEscrow
-        - VestingFactory
       abis:
-        - name: VestingFactory
-          file: Vyper_contract/abis/Vyper_contract.json
         - name: VestingEscrow
-          file: Vyper_contract/abis/Vyper_contract_escrow.json
+          file: VestingEscrow/abis/Vyper_contract_escrow.json
       eventHandlers:
         - event: ApplyOwnership(address)
           handler: onApplyOwnership
@@ -75,4 +70,4 @@ templates:
           handler: onClaim
         - event: RugPull(address,uint256)
           handler: onRugPull
-      file: templates/Vyper_contract/Vyper_contract.wasm
+      file: templates/VestingEscrow/VestingEscrow.wasm

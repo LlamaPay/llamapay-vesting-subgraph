@@ -41,6 +41,8 @@ export function onVestingEscrowCreated(event: VestingEscrowCreated): void {
   escrow.disabledAt = event.params.vesting_start.plus(
     event.params.vesting_duration
   );
+  escrow.createdBlock = event.block.number;
+  escrow.createdTimestamp = event.block.timestamp;
   factory.count += 1;
   factory.save();
   token.save();

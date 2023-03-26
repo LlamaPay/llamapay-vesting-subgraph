@@ -6,14 +6,14 @@ import {
   DataSourceContext
 } from "@graphprotocol/graph-ts";
 
-export class Vyper_contract extends DataSourceTemplate {
+export class VestingEscrow extends DataSourceTemplate {
   static create(address: Address): void {
-    DataSourceTemplate.create("Vyper_contract", [address.toHex()]);
+    DataSourceTemplate.create("VestingEscrow", [address.toHex()]);
   }
 
   static createWithContext(address: Address, context: DataSourceContext): void {
     DataSourceTemplate.createWithContext(
-      "Vyper_contract",
+      "VestingEscrow",
       [address.toHex()],
       context
     );

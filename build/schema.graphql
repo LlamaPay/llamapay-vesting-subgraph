@@ -20,6 +20,8 @@ type VestingEscrow @entity {
   disabledAt: BigInt!
   duration: BigInt!
   cliff: BigInt!
+  createdBlock: BigInt!
+  createdTimestamp: BigInt!
 }
 
 type Token @entity {
