@@ -19,3 +19,17 @@ export class VestingEscrow extends DataSourceTemplate {
     );
   }
 }
+
+export class VestingEscrowV2 extends DataSourceTemplate {
+  static create(address: Address): void {
+    DataSourceTemplate.create("VestingEscrowV2", [address.toHex()]);
+  }
+
+  static createWithContext(address: Address, context: DataSourceContext): void {
+    DataSourceTemplate.createWithContext(
+      "VestingEscrowV2",
+      [address.toHex()],
+      context
+    );
+  }
+}

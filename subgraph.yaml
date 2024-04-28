@@ -46,6 +46,50 @@ dataSources:
         - event: VestingEscrowCreated(indexed address,indexed address,indexed address,address,uint256,uint256,uint256,uint256)
           handler: onVestingEscrowCreated
       file: ./src/vyper-contract.ts
+  - kind: ethereum
+    name: Factory_v2_old
+    network: mainnet
+    source:
+      address: "0x5fa57626bdaf4584b84d2394ef44f6bd41b37caf"
+      abi: Factory_v2
+      startBlock: 19689502
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.6
+      language: wasm/assemblyscript
+      entities:
+        - VestingFactory
+      abis:
+        - name: Factory_v2
+          file: ./abis/Factory_v2.json
+        - name: ERC20
+          file: ./abis/ERC20.json
+      eventHandlers:
+        - event: VestingEscrowCreated(indexed address,indexed address,indexed address,address,uint256,uint256,uint256,uint256,bool)
+          handler: onVestingEscrowCreatedV2
+      file: ./src/vyper-contract.ts
+  - kind: ethereum
+    name: Factory_v2
+    network: mainnet
+    source:
+      address: "0xcf61782465Ff973638143d6492B51A85986aB347"
+      abi: Factory_v2
+      startBlock: 19739664
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.6
+      language: wasm/assemblyscript
+      entities:
+        - VestingFactory
+      abis:
+        - name: Factory_v2
+          file: ./abis/Factory_v2.json
+        - name: ERC20
+          file: ./abis/ERC20.json
+      eventHandlers:
+        - event: VestingEscrowCreated(indexed address,indexed address,indexed address,address,uint256,uint256,uint256,uint256,bool)
+          handler: onVestingEscrowCreatedV2
+      file: ./src/vyper-contract.ts
 
 templates:
   - kind: ethereum/contract
@@ -69,4 +113,28 @@ templates:
           handler: onClaim
         - event: RugPull(address,uint256)
           handler: onRugPull
+      file: ./src/vyper-contract-escrow.ts
+  - kind: ethereum/contract
+    name: VestingEscrowV2
+    network: mainnet
+    source:
+      abi: EscrowV2
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.6
+      language: wasm/assemblyscript
+      entities:
+        - VestingEscrow
+      abis:
+        - name: EscrowV2
+          file: ./abis/EscrowV2.json
+      eventHandlers:
+        - event: Claim(indexed address,uint256)
+          handler: onClaim
+        - event: Revoked(address,address,uint256,uint256)
+          handler: onRugPull
+        - event: Disowned(address)
+          handler: onDisowned
+        - event: SetOpenClaim(bool)
+          handler: onSetOpenClaim
       file: ./src/vyper-contract-escrow.ts
