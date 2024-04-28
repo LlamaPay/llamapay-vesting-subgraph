@@ -113,24 +113,6 @@ templates:
           handler: onClaim
         - event: RugPull(address,uint256)
           handler: onRugPull
-      file: ./src/vyper-contract-escrow.ts
-  - kind: ethereum/contract
-    name: VestingEscrowV2
-    network: mainnet
-    source:
-      abi: EscrowV2
-    mapping:
-      kind: ethereum/events
-      apiVersion: 0.0.6
-      language: wasm/assemblyscript
-      entities:
-        - VestingEscrow
-      abis:
-        - name: EscrowV2
-          file: ./abis/EscrowV2.json
-      eventHandlers:
-        - event: Claim(indexed address,uint256)
-          handler: onClaim
         - event: Revoked(address,address,uint256,uint256)
           handler: onRugPull
         - event: Disowned(address)

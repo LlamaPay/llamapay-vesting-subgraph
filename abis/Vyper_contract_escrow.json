@@ -227,5 +227,56 @@
     "inputs": [],
     "outputs": [{ "name": "", "type": "address" }],
     "gas": 2958
-  }
+  },
+  {
+    "name": "Revoked",
+    "inputs": [
+        {
+            "name": "recipient",
+            "type": "address",
+            "indexed": false
+        },
+        {
+            "name": "owner",
+            "type": "address",
+            "indexed": false
+        },
+        {
+            "name": "rugged",
+            "type": "uint256",
+            "indexed": false
+        },
+        {
+            "name": "ts",
+            "type": "uint256",
+            "indexed": false
+        }
+    ],
+    "anonymous": false,
+    "type": "event"
+},
+{
+    "name": "Disowned",
+    "inputs": [
+        {
+            "name": "owner",
+            "type": "address",
+            "indexed": false
+        }
+    ],
+    "anonymous": false,
+    "type": "event"
+},
+{
+    "name": "SetOpenClaim",
+    "inputs": [
+        {
+            "name": "state",
+            "type": "bool",
+            "indexed": false
+        }
+    ],
+    "anonymous": false,
+    "type": "event"
+}
 ]

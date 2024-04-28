@@ -3,6 +3,7 @@ import { VestingFactory, VestingEscrow, Token } from "../generated/schema";
 import { VestingEscrowCreated } from "../generated/templates/Vyper_contract/VestingFactory";
 import { VestingEscrowCreated as VestingEscrowCreatedV2 } from "../generated/Factory_v2/Factory_v2";
 import { ERC20 } from "../generated/Vyper_contract/ERC20";
+import {VestingEscrow as VestingEscrowTemplate} from "../generated/templates"
 
 export function onVestingEscrowCreated(event: VestingEscrowCreated): void {
   const factoryAddress = event.address;
@@ -45,6 +46,7 @@ export function onVestingEscrowCreated(event: VestingEscrowCreated): void {
   escrow.createdBlock = event.block.number;
   escrow.createdTimestamp = event.block.timestamp;
   escrow.openClaim = false;
+  VestingEscrowTemplate.create(escrowAddress);
   factory.count += 1;
   factory.save();
   token.save();
@@ -92,6 +94,7 @@ export function onVestingEscrowCreatedV2(event: VestingEscrowCreatedV2): void {
   escrow.createdBlock = event.block.number;
   escrow.createdTimestamp = event.block.timestamp;
   escrow.openClaim = event.params.open_claim;
+  VestingEscrowTemplate.create(escrowAddress);
   factory.count += 1;
   factory.save();
   token.save();
